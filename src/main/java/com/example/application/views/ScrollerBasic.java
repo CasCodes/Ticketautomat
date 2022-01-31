@@ -1,5 +1,6 @@
 package com.example.application.views;
 
+import com.vaadin.flow.component.FocusNotifier.FocusEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -13,6 +14,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.timepicker.TimePicker;
+import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
@@ -80,8 +82,8 @@ public class ScrollerBasic extends VerticalLayout {
     timePicker.setLabel("Time");
     timePicker.setValue(LocalTime.of(7, 0));
 
-    ComboBox<String> destination = new ComboBox<>("Destination");
-    destination.setAllowCustomValue(true);
+    ComboBox<Object> destination = new ComboBox<>("Destination");
+    destination.setAllowCustomValue(false);
     destination.setItems(hallerstrasse._name,auenland._name);
     destination.setHelperText("Select a destination");
 
@@ -98,14 +100,14 @@ public class ScrollerBasic extends VerticalLayout {
     NumberField price = new NumberField("Price");
     price.setReadOnly(true);
     price.setLabel("Price");
-    price.setValue(100.0);
+    price.setValue(null);
     Div priceSuffix = new Div();
     priceSuffix.setText("€");
     price.setSuffixComponent(priceSuffix);
 
     NumberField euroField = new NumberField();
     euroField.setLabel("Balance");
-    euroField.setValue(200.0);
+    euroField.setValue(null);
     Div euroSuffix = new Div();
     euroSuffix.setText("€");
     euroField.setSuffixComponent(euroSuffix);
@@ -143,6 +145,13 @@ public class ScrollerBasic extends VerticalLayout {
     Footer footer = new Footer(buy, reset);
     footer.getStyle().set("padding", "var(--lumo-space-wide-m)");
     add(footer);
+  }
+
+  private Ticket getValue() {
+    return null;
+  }
+
+  private void addComponent(Label label) {
   }
 
 }
