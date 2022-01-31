@@ -5,3 +5,14 @@ A ticket vending machine written in Java ☕ by Vincent, Ruben and Caspar.
 Build with the Vaadin Flow framework and served on spring boot 🍀.
 
 ![image](https://user-images.githubusercontent.com/64489325/151784424-3752fba5-8f42-41d2-bca8-68873f02a474.png)
+
+Our plan:
+![plan drawio](https://user-images.githubusercontent.com/64489325/151810271-ccd37293-02e5-41ad-b72c-c005a4c20273.png)
+
+Progress:
+- [ ] git setup
+- [ ] basic functionality
+- [ ] database
+- [ ] additional features
+  - admin view
+  - fancy ticket printing
