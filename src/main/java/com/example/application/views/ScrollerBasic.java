@@ -24,9 +24,13 @@ import java.time.LocalTime;
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 public class ScrollerBasic extends VerticalLayout {
 
+  Ticket hallerstrasse = new Ticket("hallerstrasse", 30.0);
+  Ticket mordor = new Ticket("mordor", 30.0);
+  Ticket auenland = new Ticket("auenland", 30.0);
+
   public static final String PERSONAL_TITLE_ID = "personal-title";
   public static final String EMPLOYMENT_TITLE_ID = "employment-title";
-private static final String PAYMENT_TITLE_ID = "payment-title";
+  private static final String PAYMENT_TITLE_ID = "payment-title";
 
   public ScrollerBasic() {
     setAlignItems(Alignment.CENTER);
@@ -78,7 +82,7 @@ private static final String PAYMENT_TITLE_ID = "payment-title";
 
     ComboBox<String> destination = new ComboBox<>("Destination");
     destination.setAllowCustomValue(true);
-    destination.setItems("Klosterstern", "Hallerstraße", "Osterstraße", "Neverland");
+    destination.setItems(hallerstrasse._name,auenland._name);
     destination.setHelperText("Select a destination");
 
     TextArea additionalInformation = new TextArea("Additional Information");
@@ -91,10 +95,13 @@ private static final String PAYMENT_TITLE_ID = "payment-title";
     H3 paymentTitle = new H3("Payment");
     personalTitle.setId(PAYMENT_TITLE_ID);
 
-    TextField price = new TextField("Price");
+    NumberField price = new NumberField("Price");
     price.setReadOnly(true);
     price.setLabel("Price");
-    price.setValue("Value");
+    price.setValue(100.0);
+    Div priceSuffix = new Div();
+    priceSuffix.setText("€");
+    price.setSuffixComponent(priceSuffix);
 
     NumberField euroField = new NumberField();
     euroField.setLabel("Balance");
