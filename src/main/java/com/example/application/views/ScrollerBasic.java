@@ -136,6 +136,8 @@ public class ScrollerBasic extends VerticalLayout {
         destinationDate.clear();
         destination.clear();
         additionalInformation.clear();
+        price.clear();
+        euroField.clear();
     });
 
     Footer footer = new Footer(buy, reset);
