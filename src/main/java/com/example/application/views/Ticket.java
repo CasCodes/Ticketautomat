@@ -1,5 +1,7 @@
 package com.example.application.views;
 
+import com.vaadin.flow.data.renderer.Renderer;
+
 /**
  * Beschreiben Sie hier die Klasse Ticket.
  * 
@@ -20,5 +22,10 @@ public class Ticket
         // Instanzvariable initialisieren
         _name = name;
         preis = price;
+    }
+
+
+    public String getFullName() {
+        return _name;
     }
 }

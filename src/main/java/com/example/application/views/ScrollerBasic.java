@@ -12,6 +12,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.timepicker.TimePicker;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.Renderer;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
@@ -91,9 +92,12 @@ public class ScrollerBasic extends VerticalLayout {
     timePicker.setValue(LocalTime.of(7, 0));
 
     ComboBox<Ticket> destination = new ComboBox<>("Destination");
+    destination.setItemLabelGenerator(Ticket::getFullName);
+    
     destination.setAllowCustomValue(false);
     destination.setItems(tickets);
-    destination.setValue(hamburg);
+    destination.setValue(tickets.get(0));
+    
     //setItemLabelPath
     destination.setHelperText("Select a destination");
     Button save = new Button("Save");
