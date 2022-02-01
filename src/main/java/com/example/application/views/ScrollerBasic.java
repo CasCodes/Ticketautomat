@@ -1,40 +1,33 @@
 package com.example.application.views;
 
 import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.FocusNotifier.FocusEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.grid.ItemClickEvent;
 import com.vaadin.flow.component.html.*;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.timepicker.TimePicker;
-import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.component.timepicker.TimePicker;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.data.renderer.Renderer;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
-import java.io.ObjectInputStream.GetField;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import org.springframework.boot.autoconfigure.condition.ConditionMessage.ItemsBuilder;
 
-import javax.management.Descriptor;
+import net.bytebuddy.asm.Advice.OffsetMapping.Target.ForArray;
+
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Route(value = "")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 public class ScrollerBasic extends VerticalLayout {
-
-  Ticket hallerstrasse = new Ticket("hallerstrasse", 30.0);
-  Ticket mordor = new Ticket("mordor", 40.0);
-  Ticket auenland = new Ticket("auenland", 50.0);
 
   public static final String PERSONAL_TITLE_ID = "personal-title";
   public static final String EMPLOYMENT_TITLE_ID = "employment-title";
@@ -50,6 +43,15 @@ public class ScrollerBasic extends VerticalLayout {
     setWidth("360px");
     getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
 
+    Ticket hamburg = new Ticket("Hamburg",10.0);
+    Ticket berlin = new Ticket("Berlin",20.0);
+    Ticket bonn = new Ticket("Bonn",30.0);
+    final List<Ticket> tickets = new ArrayList<>();
+    tickets.add(hamburg);
+    tickets.add(berlin);
+    tickets.add(bonn);
+
+    String hh = "Hamburg";
     // Header
     Header header = new Header();
     header.getStyle()
@@ -71,35 +73,36 @@ public class ScrollerBasic extends VerticalLayout {
 
     TextField firstName = new TextField("First name");
     firstName.setWidthFull();
+    firstName.isRequired();
 
     TextField lastName = new TextField("Last name");
     lastName.setWidthFull();
+    lastName.isRequired();
 
     Section personalInformation = new Section(personalTitle, firstName, lastName);
     personalInformation.getElement().setAttribute("aria-labelledby", PERSONAL_TITLE_ID);
-
     // Employment information
     H3 ticketTitle = new H3("Trip information");
     ticketTitle.setId(EMPLOYMENT_TITLE_ID);
 
     DatePicker destinationDate = new DatePicker("Date");
     destinationDate.setWidthFull();
+    destinationDate.isRequired();
 
     TimePicker timePicker = new TimePicker();
     timePicker.setLabel("Time");
     timePicker.setValue(LocalTime.of(7, 0));
+    timePicker.isRequired();
 
-    ComboBox<String> destination = new ComboBox<>("Destination");
+    ComboBox<Ticket> destination = new ComboBox<>("Destination");
     destination.setAllowCustomValue(false);
-    destination.setItems(hallerstrasse._name,auenland._name,mordor._name);
+    destination.setItemLabelGenerator(Ticket::getFullName);
+    destination.setItems(tickets);
+    destination.setValue(tickets.get(0));
+    destination.isRequired();
     destination.setHelperText("Select a destination");
 
-    Button save = new Button("Save");
-    save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-    save.getStyle().set("margin-left", "200");
-        
-
-    Section employmentInformation = new Section(ticketTitle, timePicker, destination,destinationDate,  save);
+    Section employmentInformation = new Section(ticketTitle, timePicker, destination,destinationDate);
     employmentInformation.getElement().setAttribute("aria-labelledby", EMPLOYMENT_TITLE_ID);
  
     // Payment
@@ -109,19 +112,22 @@ public class ScrollerBasic extends VerticalLayout {
     NumberField price = new NumberField("Price");
     price.setReadOnly(true);
     price.setLabel("Price");
-    price.setValue(dest);
+    price.setValue(destination.getValue().preis);
     Div priceSuffix = new Div();
     priceSuffix.setText("€");
     price.setSuffixComponent(priceSuffix);
+    destination.addValueChangeListener(event -> {
+      price.setValue(destination.getValue().preis);
+    });
 
     NumberField euroField = new NumberField();
+    euroField.isRequiredIndicatorVisible();
     euroField.setLabel("Balance");
     euroField.setValue(null);
     Div euroSuffix = new Div();
     euroSuffix.setText("€");
     euroField.setSuffixComponent(euroSuffix);
     euroField.setWidthFull();
-
 
     Section payment = new Section(paymentTitle, price, euroField);
     personalInformation.getElement().setAttribute("aria-labelledby", PAYMENT_TITLE_ID);
