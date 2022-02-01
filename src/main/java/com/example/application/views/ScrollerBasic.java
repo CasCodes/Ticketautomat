@@ -5,6 +5,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -27,6 +28,11 @@ public class ScrollerBasic extends VerticalLayout {
   public static final String TRIP_INFO_TITLE_ID = "trip-info-title";
   private static final String PAYMENT_TITLE_ID = "payment-title";
 
+  @Override
+  public void setAlignItems(Alignment alignment) {
+    // TODO Auto-generated method stub
+    super.setAlignItems(Alignment.CENTER);
+  }
   public ScrollerBasic() {
     setAlignItems(Alignment.CENTER);
     setHeight("600px");
@@ -130,7 +136,6 @@ public class ScrollerBasic extends VerticalLayout {
             .set("padding", "var(--lumo-space-m)");
     add(scroller);
     // end::snippet[]
-
     // Footer
     Button buy = new Button("Buy");
     buy.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
