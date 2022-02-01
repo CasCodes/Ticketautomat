@@ -1,5 +1,6 @@
 package com.example.application.views;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.FocusNotifier.FocusEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -8,6 +9,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -90,7 +92,11 @@ public class ScrollerBasic extends VerticalLayout {
     TextArea additionalInformation = new TextArea("Additional Information");
     additionalInformation.setWidthFull();
 
-    Section employmentInformation = new Section(ticketTitle, timePicker, destinationDate, destination, additionalInformation);
+    Button save = new Button("Save");
+    save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+    save.getStyle().set("margin-left", "200");
+
+    Section employmentInformation = new Section(ticketTitle, timePicker, destinationDate, destination, additionalInformation, save);
     employmentInformation.getElement().setAttribute("aria-labelledby", EMPLOYMENT_TITLE_ID);
  
     // Payment
@@ -111,6 +117,8 @@ public class ScrollerBasic extends VerticalLayout {
     Div euroSuffix = new Div();
     euroSuffix.setText("€");
     euroField.setSuffixComponent(euroSuffix);
+    euroField.setWidthFull();
+
 
     Section payment = new Section(paymentTitle, price, euroField);
     personalInformation.getElement().setAttribute("aria-labelledby", PAYMENT_TITLE_ID);
@@ -128,6 +136,8 @@ public class ScrollerBasic extends VerticalLayout {
     Button buy = new Button("Buy");
     buy.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
     buy.getStyle().set("margin-right", "var(--lumo-space-s)");
+    buy.addClickListener(ClickEvent -> 
+        System.out.printf(firstName.getValue() + " " + lastName.getValue() + "\n" + timePicker.getValue() + "\n" + destinationDate.getValue() + "\n" + destination.getValue() + "\n" + additionalInformation.getValue()));
 
     Button reset = new Button("Reset");
     reset.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
@@ -146,12 +156,4 @@ public class ScrollerBasic extends VerticalLayout {
     footer.getStyle().set("padding", "var(--lumo-space-wide-m)");
     add(footer);
   }
-
-  private Ticket getValue() {
-    return null;
-  }
-
-  private void addComponent(Label label) {
-  }
-
 }
