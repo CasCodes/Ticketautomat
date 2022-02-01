@@ -1,7 +1,5 @@
 package com.example.application.views;
 
-import com.vaadin.flow.data.renderer.Renderer;
-
 /**
  * Beschreiben Sie hier die Klasse Ticket.
  * 

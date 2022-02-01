@@ -1,6 +1,5 @@
 package com.example.application.views;
 
-import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -12,14 +11,8 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.timepicker.TimePicker;
-import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.data.renderer.Renderer;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
-
-import org.springframework.boot.autoconfigure.condition.ConditionMessage.ItemsBuilder;
-
-import net.bytebuddy.asm.Advice.OffsetMapping.Target.ForArray;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -29,10 +22,10 @@ import java.util.List;
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 public class ScrollerBasic extends VerticalLayout {
 
+  //Title ID's
   public static final String PERSONAL_TITLE_ID = "personal-title";
-  public static final String EMPLOYMENT_TITLE_ID = "employment-title";
+  public static final String TRIP_INFO_TITLE_ID = "trip-info-title";
   private static final String PAYMENT_TITLE_ID = "payment-title";
-  public static double dest = 0.0;
 
   public ScrollerBasic() {
     setAlignItems(Alignment.CENTER);
@@ -43,15 +36,12 @@ public class ScrollerBasic extends VerticalLayout {
     setWidth("360px");
     getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
 
-    Ticket hamburg = new Ticket("Hamburg",10.0);
-    Ticket berlin = new Ticket("Berlin",20.0);
-    Ticket bonn = new Ticket("Bonn",30.0);
+    //The Tickets made off destination & price
     final List<Ticket> tickets = new ArrayList<>();
-    tickets.add(hamburg);
-    tickets.add(berlin);
-    tickets.add(bonn);
+    tickets.add(new Ticket("Hamburg",10.0));
+    tickets.add(new Ticket("Berlin",20.0));
+    tickets.add(new Ticket("Bonn",30.0));
 
-    String hh = "Hamburg";
     // Header
     Header header = new Header();
     header.getStyle()
@@ -62,7 +52,6 @@ public class ScrollerBasic extends VerticalLayout {
 
     H2 ticketAutomat = new H2("Ticketautomat");
     ticketAutomat.getStyle().set("margin", "0");
-
     header.add(ticketAutomat);
     add(header);
 
@@ -70,30 +59,30 @@ public class ScrollerBasic extends VerticalLayout {
     // Personal information
     H3 personalTitle = new H3("Personal information");
     personalTitle.setId(PERSONAL_TITLE_ID);
-
+      //First Name for the ticket
     TextField firstName = new TextField("First name");
     firstName.setWidthFull();
     firstName.isRequired();
-
+      //Last Name for the ticket
     TextField lastName = new TextField("Last name");
     lastName.setWidthFull();
     lastName.isRequired();
-
+      //Build the section composing of ^
     Section personalInformation = new Section(personalTitle, firstName, lastName);
     personalInformation.getElement().setAttribute("aria-labelledby", PERSONAL_TITLE_ID);
     // Employment information
     H3 ticketTitle = new H3("Trip information");
-    ticketTitle.setId(EMPLOYMENT_TITLE_ID);
-
+    ticketTitle.setId(TRIP_INFO_TITLE_ID);
+      //Pick date of the trip
     DatePicker destinationDate = new DatePicker("Date");
     destinationDate.setWidthFull();
     destinationDate.isRequired();
-
+      //Pick time of the trip
     TimePicker timePicker = new TimePicker();
     timePicker.setLabel("Time");
     timePicker.setValue(LocalTime.of(7, 0));
     timePicker.isRequired();
-
+      //select the destination - sets price
     ComboBox<Ticket> destination = new ComboBox<>("Destination");
     destination.setAllowCustomValue(false);
     destination.setItemLabelGenerator(Ticket::getFullName);
@@ -103,12 +92,12 @@ public class ScrollerBasic extends VerticalLayout {
     destination.setHelperText("Select a destination");
 
     Section employmentInformation = new Section(ticketTitle, timePicker, destination,destinationDate);
-    employmentInformation.getElement().setAttribute("aria-labelledby", EMPLOYMENT_TITLE_ID);
+    employmentInformation.getElement().setAttribute("aria-labelledby", TRIP_INFO_TITLE_ID);
  
     // Payment
     H3 paymentTitle = new H3("Payment");
     personalTitle.setId(PAYMENT_TITLE_ID);
-
+      //show the price of the ticket
     NumberField price = new NumberField("Price");
     price.setReadOnly(true);
     price.setLabel("Price");
@@ -120,6 +109,7 @@ public class ScrollerBasic extends VerticalLayout {
       price.setValue(destination.getValue().preis);
     });
 
+    //the balance of the buyer
     NumberField euroField = new NumberField();
     euroField.isRequiredIndicatorVisible();
     euroField.setLabel("Balance");
@@ -132,7 +122,7 @@ public class ScrollerBasic extends VerticalLayout {
     Section payment = new Section(paymentTitle, price, euroField);
     personalInformation.getElement().setAttribute("aria-labelledby", PAYMENT_TITLE_ID);
 
-
+    //builds the whole component with the sections
     Scroller scroller = new Scroller(new Div(personalInformation, employmentInformation,payment));
     scroller.setScrollDirection(Scroller.ScrollDirection.VERTICAL);
     scroller.getStyle()
