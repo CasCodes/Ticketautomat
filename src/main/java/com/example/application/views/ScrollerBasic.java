@@ -145,8 +145,17 @@ public class ScrollerBasic extends VerticalLayout {
     Button buy = new Button("Buy");
     buy.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
     buy.getStyle().set("margin-right", "var(--lumo-space-s)");
-    buy.addClickListener(ClickEvent -> 
-        System.out.printf(price.getValue() + "\n"));
+    
+    // get the entered price on press of buy
+    PriceHandler priceHandler = new PriceHandler();
+    buy.addClickListener(ClickEvent -> {
+        if (priceHandler.compare(price.getValue(), euroField.getValue()) == true){
+          System.out.println("payed");
+        }
+        else {
+          System.out.println("not enough balance");
+        }
+      });
 
     Button reset = new Button("Reset");
     reset.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
