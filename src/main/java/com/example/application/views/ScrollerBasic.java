@@ -92,20 +92,15 @@ public class ScrollerBasic extends VerticalLayout {
     timePicker.setValue(LocalTime.of(7, 0));
 
     ComboBox<Ticket> destination = new ComboBox<>("Destination");
-    destination.setItemLabelGenerator(Ticket::getFullName);
-    
     destination.setAllowCustomValue(false);
+    destination.setItemLabelGenerator(Ticket::getFullName);
     destination.setItems(tickets);
     destination.setValue(tickets.get(0));
     
     //setItemLabelPath
     destination.setHelperText("Select a destination");
-    Button save = new Button("Save");
-    save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-    save.getStyle().set("margin-left", "200");
-        
 
-    Section employmentInformation = new Section(ticketTitle, timePicker, destination,destinationDate,  save);
+    Section employmentInformation = new Section(ticketTitle, timePicker, destination,destinationDate);
     employmentInformation.getElement().setAttribute("aria-labelledby", EMPLOYMENT_TITLE_ID);
  
     // Payment
