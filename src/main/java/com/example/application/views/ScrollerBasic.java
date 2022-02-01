@@ -73,31 +73,33 @@ public class ScrollerBasic extends VerticalLayout {
 
     TextField firstName = new TextField("First name");
     firstName.setWidthFull();
+    firstName.isRequired();
 
     TextField lastName = new TextField("Last name");
     lastName.setWidthFull();
+    lastName.isRequired();
 
     Section personalInformation = new Section(personalTitle, firstName, lastName);
     personalInformation.getElement().setAttribute("aria-labelledby", PERSONAL_TITLE_ID);
-
     // Employment information
     H3 ticketTitle = new H3("Trip information");
     ticketTitle.setId(EMPLOYMENT_TITLE_ID);
 
     DatePicker destinationDate = new DatePicker("Date");
     destinationDate.setWidthFull();
+    destinationDate.isRequired();
 
     TimePicker timePicker = new TimePicker();
     timePicker.setLabel("Time");
     timePicker.setValue(LocalTime.of(7, 0));
+    timePicker.isRequired();
 
     ComboBox<Ticket> destination = new ComboBox<>("Destination");
     destination.setAllowCustomValue(false);
     destination.setItemLabelGenerator(Ticket::getFullName);
     destination.setItems(tickets);
     destination.setValue(tickets.get(0));
-    
-    //setItemLabelPath
+    destination.isRequired();
     destination.setHelperText("Select a destination");
 
     Section employmentInformation = new Section(ticketTitle, timePicker, destination,destinationDate);
@@ -119,6 +121,7 @@ public class ScrollerBasic extends VerticalLayout {
     });
 
     NumberField euroField = new NumberField();
+    euroField.isRequiredIndicatorVisible();
     euroField.setLabel("Balance");
     euroField.setValue(null);
     Div euroSuffix = new Div();
