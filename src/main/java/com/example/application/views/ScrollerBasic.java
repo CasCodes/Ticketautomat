@@ -5,6 +5,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
@@ -197,7 +198,12 @@ public class ScrollerBasic extends VerticalLayout {
     Button buy = new Button("Buy");
     buy.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
     buy.getStyle().set("margin-right", "var(--lumo-space-s)");
+
+    // get the entered price on press of buy
+    PriceHandler priceHandler = new PriceHandler(); // added by caspar in merge
+
     buy.addClickListener(ClickEvent -> {
+      // if are NO empty fields
       if(!firstName.isEmpty() && 
          !lastName.isEmpty() && 
          !emailField.isEmpty() &&
@@ -209,6 +215,19 @@ public class ScrollerBasic extends VerticalLayout {
         System.out.println("At: " + timePickerVar);
         System.out.println("On the: " + destinationDateVar);
         System.out.println("To: " + destinationVar);
+        
+        // caspars pop up inserted
+        if (priceHandler.compare(price.getValue(), euroField.getValue()) == true){
+          System.out.println("payed");
+
+          // pop up dialog
+          DialogBasic info = new DialogBasic(priceHandler.cashback(price.getValue(), euroField.getValue()));
+          add(info);
+        }
+        else {
+          System.out.println("not enough balance");
+        }
+
       }
       else{
         Notification notification = new Notification();
@@ -228,8 +247,10 @@ public class ScrollerBasic extends VerticalLayout {
 
         notification.add(layout);
         notification.open();
+
       }
     });
+
 
     Button reset = new Button("Reset");
     reset.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
