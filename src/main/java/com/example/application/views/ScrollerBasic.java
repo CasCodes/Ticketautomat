@@ -13,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
@@ -40,6 +41,7 @@ public class ScrollerBasic extends VerticalLayout {
   public String destinationDateVar ;
   public String timePickerVar;
   public String destinationVar;
+  public Integer ticket_amountVar;
 
   public ScrollerBasic() {
     setAlignItems(Alignment.CENTER);
@@ -54,6 +56,7 @@ public class ScrollerBasic extends VerticalLayout {
 
     //The Tickets made off destination & price
     final List<Ticket> tickets = new ArrayList<>();
+    tickets.add(new Ticket("Select a destination", 0.0));
     tickets.add(new Ticket("Hamburg",10.0));
     tickets.add(new Ticket("Berlin",20.0));
     tickets.add(new Ticket("Bonn",30.0));
@@ -109,7 +112,6 @@ public class ScrollerBasic extends VerticalLayout {
     ticketTitle.setId(TRIP_INFO_TITLE_ID);
       //Pick date of the trip
     DatePicker destinationDate = new DatePicker("Date");
-    destinationDate.setWidthFull();
     destinationDate.setRequired(true); 
     destinationDate.setErrorMessage("This field is required");
     destinationDate.addValueChangeListener(event -> {
@@ -135,7 +137,18 @@ public class ScrollerBasic extends VerticalLayout {
     destination.setErrorMessage("This field is required");
     destination.setHelperText("Select a destination");
 
-    Section employmentInformation = new Section(ticketTitle, timePicker, destination,destinationDate);
+    IntegerField ticket_amount = new IntegerField();
+    ticket_amount.setLabel("Ticket Quantity");
+    ticket_amount.setHelperText("Max 10 items");
+    ticket_amount.setMin(1);
+    ticket_amount.setMax(10);
+    ticket_amount.setValue(2);
+    ticket_amount.setHasControls(true);
+    ticket_amount.addValueChangeListener(event -> {
+      ticket_amountVar = ticket_amount.getValue();
+    });
+
+    Section employmentInformation = new Section(ticketTitle, timePicker, destinationDate, destination, ticket_amount);
     employmentInformation.getElement().setAttribute("aria-labelledby", TRIP_INFO_TITLE_ID);
  
     // Payment
@@ -186,6 +199,7 @@ public class ScrollerBasic extends VerticalLayout {
          !timePicker.isEmpty() &&
          !destinationDate.isEmpty()){
         System.out.println(firstNameVar + " " + lastNameVar);
+        System.out.println("Tickets: " +  ticket_amount.getValue());
         System.out.println("At: " + timePickerVar);
         System.out.println("On the: " + destinationDateVar);
         System.out.println("To: " + destinationVar);
