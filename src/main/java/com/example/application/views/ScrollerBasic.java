@@ -126,7 +126,7 @@ public class ScrollerBasic extends VerticalLayout {
     timePicker.addValueChangeListener(event -> {
       timePickerVar = timePicker.getValue().toString();
     });
-      //select the destination - sets price
+    //select the destination - sets price
     ComboBox<Ticket> destination = new ComboBox<>("Destination");
     destination.setWidthFull();
     destination.setAllowCustomValue(false);
@@ -136,37 +136,38 @@ public class ScrollerBasic extends VerticalLayout {
     destination.setRequired(true); 
     destination.setErrorMessage("This field is required");
     destination.setHelperText("Select a destination");
-
+    
     IntegerField ticket_amount = new IntegerField();
     ticket_amount.setLabel("Ticket Quantity");
     ticket_amount.setHelperText("Max 10 items");
     ticket_amount.setMin(1);
     ticket_amount.setMax(10);
-    ticket_amount.setValue(2);
+    ticket_amount.setValue(1);
     ticket_amount.setHasControls(true);
-    ticket_amount.addValueChangeListener(event -> {
-      ticket_amountVar = ticket_amount.getValue();
-    });
-
+    
     Section employmentInformation = new Section(ticketTitle, timePicker, destinationDate, destination, ticket_amount);
     employmentInformation.getElement().setAttribute("aria-labelledby", TRIP_INFO_TITLE_ID);
- 
+    
     // Payment
     H3 paymentTitle = new H3("Payment");
     personalTitle.setId(PAYMENT_TITLE_ID);
-      //show the price of the ticket
+    //show the price of the ticket
     NumberField price = new NumberField("Price");
     price.setReadOnly(true);
     price.setLabel("Price");
-    price.setValue(destination.getValue().preis);
+    price.setValue(destination.getValue().preis * ticket_amount.getValue());
     Div priceSuffix = new Div();
     priceSuffix.setText("€");
     price.setSuffixComponent(priceSuffix);
     destination.addValueChangeListener(event -> {
-      price.setValue(destination.getValue().preis);
+      price.setValue(destination.getValue().preis * ticket_amount.getValue());
       destinationVar = destination.getValue()._name;
     });
-
+    ticket_amount.addValueChangeListener(event -> {
+      ticket_amountVar = ticket_amount.getValue();
+      price.setValue(destination.getValue().preis * ticket_amount.getValue());
+    });
+    
     //the balance of the buyer
     NumberField euroField = new NumberField();
     euroField.setLabel("Balance");
@@ -197,6 +198,7 @@ public class ScrollerBasic extends VerticalLayout {
          !lastName.isEmpty() && 
          !emailField.isEmpty() &&
          !timePicker.isEmpty() &&
+         !euroField.isEmpty() &&
          !destinationDate.isEmpty()){
         System.out.println(firstNameVar + " " + lastNameVar);
         System.out.println("Tickets: " +  ticket_amount.getValue());
