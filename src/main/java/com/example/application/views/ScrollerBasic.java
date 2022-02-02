@@ -51,7 +51,6 @@ public class ScrollerBasic extends VerticalLayout {
     tickets.add(berlin);
     tickets.add(bonn);
 
-    String hh = "Hamburg";
     // Header
     Header header = new Header();
     header.getStyle()
