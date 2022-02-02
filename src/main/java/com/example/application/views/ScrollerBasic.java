@@ -1,10 +1,16 @@
 package com.example.application.views;
 
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.login.LoginI18n;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -131,7 +137,7 @@ public class ScrollerBasic extends VerticalLayout {
     price.setSuffixComponent(priceSuffix);
     destination.addValueChangeListener(event -> {
       price.setValue(destination.getValue().preis);
-      destinationVar = destination.getValue().toString();
+      destinationVar = destination.getValue()._name;
     });
 
     //the balance of the buyer
@@ -159,10 +165,34 @@ public class ScrollerBasic extends VerticalLayout {
     buy.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
     buy.getStyle().set("margin-right", "var(--lumo-space-s)");
     buy.addClickListener(ClickEvent -> {
-      System.out.println(firstNameVar + " " + lastNameVar);
-      System.out.println("At: " + timePickerVar);
-      System.out.println("On the: " + destinationDateVar);
-      System.out.println("To: " + destinationVar);
+      if(!firstName.isEmpty() && 
+         !lastName.isEmpty() && 
+         !timePicker.isEmpty() &&
+         !destinationDate.isEmpty()){
+        System.out.println(firstNameVar + " " + lastNameVar);
+        System.out.println("At: " + timePickerVar);
+        System.out.println("On the: " + destinationDateVar);
+        System.out.println("To: " + destinationVar);
+      }
+      else{
+        Notification notification = new Notification();
+        notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+
+        Div text = new Div(new Text("Fill in all fields!"));
+
+        Button closeButton = new Button(new Icon("lumo", "cross"));
+        closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        closeButton.getElement().setAttribute("aria-label", "Close");
+        closeButton.addClickListener(event -> {
+          notification.close();
+        });
+
+        HorizontalLayout layout = new HorizontalLayout(text, closeButton);
+        layout.setAlignItems(Alignment.CENTER);
+
+        notification.add(layout);
+        notification.open();
+      }
     });
 
     Button reset = new Button("Reset");
@@ -172,8 +202,6 @@ public class ScrollerBasic extends VerticalLayout {
         lastName.clear();
         timePicker.clear();
         destinationDate.clear();
-        destination.clear();
-        price.clear();
         euroField.clear();
     });
 
