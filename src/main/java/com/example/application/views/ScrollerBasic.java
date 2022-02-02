@@ -139,7 +139,6 @@ public class ScrollerBasic extends VerticalLayout {
     destination.setValue(tickets.get(0));
     destination.setRequired(true); 
     destination.setErrorMessage("This field is required");
-    destination.setHelperText("Select a destination");
     
     IntegerField ticket_amount = new IntegerField();
     ticket_amount.setLabel("Ticket Quantity");
