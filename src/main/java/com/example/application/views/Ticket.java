@@ -1,5 +1,4 @@
 package com.example.application.views;
-
 /**
  * Beschreiben Sie hier die Klasse Ticket.
  * 

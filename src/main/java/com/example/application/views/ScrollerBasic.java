@@ -12,6 +12,7 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
@@ -22,6 +23,7 @@ import com.vaadin.flow.theme.lumo.Lumo;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Route(value = "")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
@@ -34,23 +36,20 @@ public class ScrollerBasic extends VerticalLayout {
 
   public String firstNameVar;
   public String lastNameVar ;
+  public String emailFieldVar;
   public String destinationDateVar ;
   public String timePickerVar;
   public String destinationVar;
 
-  @Override
-  public void setAlignItems(Alignment alignment) {
-    // TODO Auto-generated method stub
-    super.setAlignItems(Alignment.CENTER);
-  }
   public ScrollerBasic() {
     setAlignItems(Alignment.CENTER);
-    
+    /* Removed to center
     setHeight("600px");
-    setMaxWidth("100%");
     setPadding(false);
     setSpacing(false);
     setWidth("360px");
+    */
+    setMaxWidth("100%");
     getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
 
     //The Tickets made off destination & price
@@ -92,8 +91,18 @@ public class ScrollerBasic extends VerticalLayout {
     lastName.addValueChangeListener(event -> {
       lastNameVar = lastName.getValue().toString();
     });
+    EmailField emailField = new EmailField();
+    emailField.setLabel("Email address");
+    emailField.setRequiredIndicatorVisible(true);
+    emailField.getElement().setAttribute("name", "email");
+    emailField.setPlaceholder("username@example.com");
+    emailField.setErrorMessage("Please enter a valid example.com email address");
+    emailField.setClearButtonVisible(true);
+    emailField.addValueChangeListener(event -> {
+      emailFieldVar = emailField.getValue().toString();
+    });
       //Build the section composing of ^
-    Section personalInformation = new Section(personalTitle, firstName, lastName);
+    Section personalInformation = new Section(personalTitle, firstName, lastName, emailField);
     personalInformation.getElement().setAttribute("aria-labelledby", PERSONAL_TITLE_ID);
     // Employment information
     H3 ticketTitle = new H3("Trip information");
@@ -117,6 +126,7 @@ public class ScrollerBasic extends VerticalLayout {
     });
       //select the destination - sets price
     ComboBox<Ticket> destination = new ComboBox<>("Destination");
+    destination.setWidthFull();
     destination.setAllowCustomValue(false);
     destination.setItemLabelGenerator(Ticket::getFullName);
     destination.setItems(tickets);
@@ -165,12 +175,14 @@ public class ScrollerBasic extends VerticalLayout {
     add(scroller);
     // end::snippet[]
     // Footer
+
     Button buy = new Button("Buy");
     buy.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
     buy.getStyle().set("margin-right", "var(--lumo-space-s)");
     buy.addClickListener(ClickEvent -> {
       if(!firstName.isEmpty() && 
          !lastName.isEmpty() && 
+         !emailField.isEmpty() &&
          !timePicker.isEmpty() &&
          !destinationDate.isEmpty()){
         System.out.println(firstNameVar + " " + lastNameVar);
