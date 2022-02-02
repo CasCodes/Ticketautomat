@@ -5,6 +5,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -150,6 +151,11 @@ public class ScrollerBasic extends VerticalLayout {
     buy.addClickListener(ClickEvent -> {
         if (priceHandler.compare(price.getValue(), euroField.getValue()) == true){
           System.out.println("payed");
+
+          // pop up dialog
+          DialogBasic info = new DialogBasic();
+
+          add(info);
         }
         else {
           System.out.println("not enough balance");

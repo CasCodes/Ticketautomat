@@ -26,4 +26,5 @@ public class PriceHandler {
         float cashback = (float) (balance - price);
         return cashback;
     }
+    // TODO add popup window for cashback 
 }
