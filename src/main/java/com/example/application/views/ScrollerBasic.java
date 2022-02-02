@@ -1,10 +1,15 @@
 package com.example.application.views;
 
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.login.LoginI18n;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -28,6 +33,12 @@ public class ScrollerBasic extends VerticalLayout {
   public static final String TRIP_INFO_TITLE_ID = "trip-info-title";
   private static final String PAYMENT_TITLE_ID = "payment-title";
 
+  public String firstNameVar;
+  public String lastNameVar ;
+  public String destinationDateVar ;
+  public String timePickerVar;
+  public String destinationVar;
+
   @Override
   public void setAlignItems(Alignment alignment) {
     // TODO Auto-generated method stub
@@ -35,6 +46,7 @@ public class ScrollerBasic extends VerticalLayout {
   }
   public ScrollerBasic() {
     setAlignItems(Alignment.CENTER);
+    
     setHeight("600px");
     setMaxWidth("100%");
     setPadding(false);
@@ -68,11 +80,19 @@ public class ScrollerBasic extends VerticalLayout {
       //First Name for the ticket
     TextField firstName = new TextField("First name");
     firstName.setWidthFull();
-    firstName.isRequired();
+    firstName.setRequired(true); 
+    firstName.setErrorMessage("This field is required");
+    firstName.addValueChangeListener(event -> {
+      firstNameVar = firstName.getValue().toString();
+    });
       //Last Name for the ticket
     TextField lastName = new TextField("Last name");
     lastName.setWidthFull();
-    lastName.isRequired();
+    lastName.setRequired(true); 
+    lastName.setErrorMessage("This field is required");
+    lastName.addValueChangeListener(event -> {
+      lastNameVar = lastName.getValue().toString();
+    });
       //Build the section composing of ^
     Section personalInformation = new Section(personalTitle, firstName, lastName);
     personalInformation.getElement().setAttribute("aria-labelledby", PERSONAL_TITLE_ID);
@@ -82,19 +102,28 @@ public class ScrollerBasic extends VerticalLayout {
       //Pick date of the trip
     DatePicker destinationDate = new DatePicker("Date");
     destinationDate.setWidthFull();
-    destinationDate.isRequired();
+    destinationDate.setRequired(true); 
+    destinationDate.setErrorMessage("This field is required");
+    destinationDate.addValueChangeListener(event -> {
+      destinationDateVar = destinationDate.getValue().toString();
+    });
       //Pick time of the trip
     TimePicker timePicker = new TimePicker();
     timePicker.setLabel("Time");
     timePicker.setValue(LocalTime.of(7, 0));
-    timePicker.isRequired();
+    timePicker.setRequired(true); 
+    timePicker.setErrorMessage("This field is required");
+    timePicker.addValueChangeListener(event -> {
+      timePickerVar = timePicker.getValue().toString();
+    });
       //select the destination - sets price
     ComboBox<Ticket> destination = new ComboBox<>("Destination");
     destination.setAllowCustomValue(false);
     destination.setItemLabelGenerator(Ticket::getFullName);
     destination.setItems(tickets);
     destination.setValue(tickets.get(0));
-    destination.isRequired();
+    destination.setRequired(true); 
+    destination.setErrorMessage("This field is required");
     destination.setHelperText("Select a destination");
 
     Section employmentInformation = new Section(ticketTitle, timePicker, destination,destinationDate);
@@ -113,11 +142,11 @@ public class ScrollerBasic extends VerticalLayout {
     price.setSuffixComponent(priceSuffix);
     destination.addValueChangeListener(event -> {
       price.setValue(destination.getValue().preis);
+      destinationVar = destination.getValue()._name;
     });
 
     //the balance of the buyer
     NumberField euroField = new NumberField();
-    euroField.isRequiredIndicatorVisible();
     euroField.setLabel("Balance");
     euroField.setValue(null);
     Div euroSuffix = new Div();
@@ -140,8 +169,36 @@ public class ScrollerBasic extends VerticalLayout {
     Button buy = new Button("Buy");
     buy.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
     buy.getStyle().set("margin-right", "var(--lumo-space-s)");
-    buy.addClickListener(ClickEvent -> 
-        System.out.printf(price.getValue() + "\n"));
+    buy.addClickListener(ClickEvent -> {
+      if(!firstName.isEmpty() && 
+         !lastName.isEmpty() && 
+         !timePicker.isEmpty() &&
+         !destinationDate.isEmpty()){
+        System.out.println(firstNameVar + " " + lastNameVar);
+        System.out.println("At: " + timePickerVar);
+        System.out.println("On the: " + destinationDateVar);
+        System.out.println("To: " + destinationVar);
+      }
+      else{
+        Notification notification = new Notification();
+        notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+
+        Div text = new Div(new Text("Fill in all fields!"));
+
+        Button closeButton = new Button(new Icon("lumo", "cross"));
+        closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        closeButton.getElement().setAttribute("aria-label", "Close");
+        closeButton.addClickListener(event -> {
+          notification.close();
+        });
+
+        HorizontalLayout layout = new HorizontalLayout(text, closeButton);
+        layout.setAlignItems(Alignment.CENTER);
+
+        notification.add(layout);
+        notification.open();
+      }
+    });
 
     Button reset = new Button("Reset");
     reset.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
@@ -150,8 +207,6 @@ public class ScrollerBasic extends VerticalLayout {
         lastName.clear();
         timePicker.clear();
         destinationDate.clear();
-        destination.clear();
-        price.clear();
         euroField.clear();
     });
 
