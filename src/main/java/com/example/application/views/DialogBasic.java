@@ -30,13 +30,18 @@ public class DialogBasic extends Div {
         headline.getStyle().set("margin", "var(--lumo-space-m) 0 0 0")
                 .set("font-size", "1.5em").set("font-weight", "bold");
 
-        // todo pass return cash
+        // return cash and user info
         H5 cashReturn = new H5("cashback: " + returnCash.toString() + "€");
+        H5 emailInfo = new H5("Your ticket will be send via email! (make sure to check spam)");
+        
         VerticalLayout fieldLayout = new VerticalLayout(cashReturn);
         fieldLayout.setSpacing(false);
         fieldLayout.setPadding(false);
         fieldLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
 
+        VerticalLayout infoLayout = new VerticalLayout(emailInfo);
+
+        // CALL EMAIL FUNCTION ON BUY
         Button cancelButton = new Button("Cancel", e -> dialog.close());
         Button saveButton = new Button("Buy", e -> dialog.close());
 
@@ -46,7 +51,7 @@ public class DialogBasic extends Div {
         buttonLayout
                 .setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
-        VerticalLayout dialogLayout = new VerticalLayout(headline, fieldLayout,
+        VerticalLayout dialogLayout = new VerticalLayout(headline, fieldLayout, infoLayout,
                 buttonLayout);
         dialogLayout.setPadding(false);
         dialogLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
