@@ -218,6 +218,7 @@ public class ScrollerBasic extends VerticalLayout {
         lastName.clear();
         timePicker.clear();
         destinationDate.clear();
+        emailField.clear();
         euroField.clear();
     });
 
