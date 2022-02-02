@@ -21,7 +21,9 @@ import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,14 +115,16 @@ public class ScrollerBasic extends VerticalLayout {
       //Pick date of the trip
     DatePicker destinationDate = new DatePicker("Date");
     destinationDate.setRequired(true); 
+    destinationDate.setMin(LocalDate.now(ZoneId.systemDefault()));
     destinationDate.setErrorMessage("This field is required");
     destinationDate.addValueChangeListener(event -> {
       destinationDateVar = destinationDate.getValue().toString();
     });
       //Pick time of the trip
     TimePicker timePicker = new TimePicker();
+    timePicker.setRequiredIndicatorVisible(true);
     timePicker.setLabel("Time");
-    timePicker.setValue(LocalTime.of(7, 0));
+    timePicker.setValue(LocalTime.of(3, 0));
     timePicker.setRequired(true); 
     timePicker.setErrorMessage("This field is required");
     timePicker.addValueChangeListener(event -> {
@@ -171,6 +175,7 @@ public class ScrollerBasic extends VerticalLayout {
     //the balance of the buyer
     NumberField euroField = new NumberField();
     euroField.setLabel("Balance");
+    euroField.setRequiredIndicatorVisible(true);
     euroField.setValue(null);
     Div euroSuffix = new Div();
     euroSuffix.setText("€");
