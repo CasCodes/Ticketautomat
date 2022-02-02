@@ -12,8 +12,6 @@ public class PriceHandler {
 
         if(balance >= price) {
             System.out.println("price: " + price + "\nbalance: " + balance);
-            float cashReturn = cashback(price, balance);
-            System.out.println("return: " + cashReturn);
             return true;
         }
         else{
@@ -24,7 +22,7 @@ public class PriceHandler {
     // local function to compute the cashback and 
     public Float cashback(Double price, Double balance){
         float cashback = (float) (balance - price);
+        System.out.println("return: " + cashback);
         return cashback;
     }
-    // TODO add popup window for cashback 
 }

@@ -153,8 +153,7 @@ public class ScrollerBasic extends VerticalLayout {
           System.out.println("payed");
 
           // pop up dialog
-          DialogBasic info = new DialogBasic();
-
+          DialogBasic info = new DialogBasic(priceHandler.cashback(price.getValue(), euroField.getValue()));
           add(info);
         }
         else {
