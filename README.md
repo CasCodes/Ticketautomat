@@ -1,4 +1,6 @@
 [![GitHub issues](https://img.shields.io/github/issues/CasCodes/Ticketautomat)](https://github.com/CasCodes/Ticketautomat/issues)
+[![GitHub collaborators](https://img.shields.io/badge/collaborators-VinceDerPrince-orange)](https://github.com/VinceDerPrince)
+
 # Ticketautomat 🎫
 
 A ticket vending machine written in Java ☕ by [Vincent](https://github.com/VinceDerPrince), [Ruben](https://github.com/rubenkol) and Caspar.
