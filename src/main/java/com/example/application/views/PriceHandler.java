@@ -12,6 +12,7 @@ public class PriceHandler {
 
         if(balance >= price) {
             System.out.println("price: " + price + "\nbalance: " + balance);
+            Connect.connect();
             return true;
         }
         else{

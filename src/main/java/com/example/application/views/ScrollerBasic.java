@@ -91,6 +91,7 @@ public class ScrollerBasic extends VerticalLayout {
     });
       //Last Name for the ticket
     TextField lastName = new TextField("Last name");
+
     lastName.setWidthFull();
     lastName.setRequired(true); 
     lastName.setErrorMessage("This field is required");

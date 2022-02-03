@@ -98,11 +98,13 @@ public class SendMail {
             success.add(layout);
             success.open();
 
+            // clear all fields
+            // maybe use a function that stores all variables and clears them afterwards
 
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
 
-    }
+    }   
 
 }
