@@ -275,16 +275,17 @@ public class ScrollerBasic extends VerticalLayout {
     Button reset = new Button("Reset");
     reset.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
     reset.addClickListener(clickListener -> {
-        firstName.clear();
-        lastName.clear();
-        timePicker.setValue(LocalTime.of(3, 0));
-        destinationDate.clear();
-        emailField.clear();
-        euroField.clear();
+      firstName.clear();
+      lastName.clear();
+      timePicker.setValue(LocalTime.of(3, 0));
+      destinationDate.clear();
+      emailField.clear();
+      euroField.clear();
     });
 
     Footer footer = new Footer(buy, reset);
     footer.getStyle().set("padding", "var(--lumo-space-wide-m)");
     add(footer);
   }
+
 }

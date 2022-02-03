@@ -35,7 +35,7 @@ public class SendMail {
 
             protected PasswordAuthentication getPasswordAuthentication() {
 
-                return new PasswordAuthentication("vincas.express@gmail.com", "<ArkadBabylon69>");
+                return new PasswordAuthentication("vincas.express@gmail.com", "*****");
 
             }
 
