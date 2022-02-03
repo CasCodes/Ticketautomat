@@ -5,9 +5,9 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -233,7 +233,7 @@ public class ScrollerBasic extends VerticalLayout {
 
           Div text = new Div(new Text("Not enough balance!"));
 
-          Button closeButton = new Button(new Icon("lumo", "cross"));
+          Button closeButton = new Button(new Icon(VaadinIcon.CLOSE));
           closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
           closeButton.getElement().setAttribute("aria-label", "Close");
           closeButton.addClickListener(event -> {
@@ -254,7 +254,7 @@ public class ScrollerBasic extends VerticalLayout {
 
         Div text = new Div(new Text("Fill in all fields!"));
 
-        Button closeButton = new Button(new Icon("lumo", "cross"));
+        Button closeButton = new Button(new Icon(VaadinIcon.CLOSE));
         closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         closeButton.getElement().setAttribute("aria-label", "Close");
         closeButton.addClickListener(event -> {
