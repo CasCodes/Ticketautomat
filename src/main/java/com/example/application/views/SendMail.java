@@ -57,9 +57,10 @@ public class SendMail {
             // Set Subject: header field
             message.setSubject("VinCas Express Tickets!");
 
+            String content = String.format("<h1>hello %s<h1>", mail_adr);
             // Send the actual HTML message.
             message.setContent(
-                "<h1>This is actual message embedded in HTML tags</h1><h2> test cap<h2>",
+                content,
             "text/html");
 
             System.out.println("sending...");
