@@ -72,7 +72,7 @@ public class ScrollerBasic extends VerticalLayout {
             .set("display", "flex")
             .set("padding", "var(--lumo-space-m)");
 
-    H2 ticketAutomat = new H2("Ticketautomat");
+    H2 ticketAutomat = new H2("VinCas Express");
     ticketAutomat.getStyle().set("margin", "0");
     header.add(ticketAutomat);
     add(header);
