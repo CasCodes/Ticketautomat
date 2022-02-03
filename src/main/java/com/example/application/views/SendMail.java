@@ -55,7 +55,7 @@ public class SendMail {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
             // Set Subject: header field
-            message.setSubject("This is the Subject Line!");
+            message.setSubject("VinCas Express Tickets!");
 
             // Now set the actual message
             message.setText("This is actual message");
