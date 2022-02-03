@@ -60,7 +60,7 @@ public class ScrollerBasic extends VerticalLayout {
     //The Tickets made off destination & price
     final List<Ticket> tickets = new ArrayList<>();
     tickets.add(new Ticket("Select a destination", 0.0));
-    tickets.add(new Ticket("Aeunland",9.99));
+    tickets.add(new Ticket("Auenland",9.99));
     tickets.add(new Ticket("Mordor",19.99));
     tickets.add(new Ticket("Bielefeld",29.99));
 

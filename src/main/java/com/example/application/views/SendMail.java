@@ -10,6 +10,17 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+
 public class SendMail {
 
     public void send(String mail_adr) {
@@ -66,7 +77,28 @@ public class SendMail {
             System.out.println("sending...");
             // Send message
             Transport.send(message);
-            System.out.println("Sent message successfully....");
+            System.out.println("Send message successfully....");
+
+            // send mail info pop up
+            Notification success = new Notification();
+            success.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+
+            Div text = new Div(new Text("Mail send successfully!"));
+
+            Button closeButton = new Button(new Icon(VaadinIcon.CLOSE));
+            closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+            closeButton.getElement().setAttribute("aria-label", "Close");
+            closeButton.addClickListener(event -> {
+            success.close();
+            });
+
+            HorizontalLayout layout = new HorizontalLayout(text, closeButton);
+            layout.setAlignItems(Alignment.CENTER);
+
+            success.add(layout);
+            success.open();
+
+
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
