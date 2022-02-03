@@ -60,9 +60,9 @@ public class ScrollerBasic extends VerticalLayout {
     //The Tickets made off destination & price
     final List<Ticket> tickets = new ArrayList<>();
     tickets.add(new Ticket("Select a destination", 0.0));
-    tickets.add(new Ticket("Hamburg",10.0));
-    tickets.add(new Ticket("Berlin",20.0));
-    tickets.add(new Ticket("Bonn",30.0));
+    tickets.add(new Ticket("Aeunland",9.99));
+    tickets.add(new Ticket("Mordor",19.99));
+    tickets.add(new Ticket("Bielefeld",29.99));
 
     // Header
     Header header = new Header();
@@ -215,13 +215,14 @@ public class ScrollerBasic extends VerticalLayout {
         System.out.println("At: " + timePickerVar);
         System.out.println("On the: " + destinationDateVar);
         System.out.println("To: " + destinationVar);
+        System.out.println("Mail: " + emailFieldVar);
         
         // caspars pop up inserted
         if (priceHandler.compare(price.getValue(), euroField.getValue()) == true){
           System.out.println("payed");
 
           // pop up dialog
-          DialogBasic info = new DialogBasic(priceHandler.cashback(price.getValue(), euroField.getValue()));
+          DialogBasic info = new DialogBasic(priceHandler.cashback(price.getValue(), euroField.getValue()),emailFieldVar);
           add(info);
         }
         else {
@@ -275,7 +276,7 @@ public class ScrollerBasic extends VerticalLayout {
     reset.addClickListener(clickListener -> {
         firstName.clear();
         lastName.clear();
-        timePicker.clear();
+        timePicker.setValue(LocalTime.of(3, 0));
         destinationDate.clear();
         emailField.clear();
         euroField.clear();
