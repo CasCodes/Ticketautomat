@@ -115,6 +115,7 @@ public class ScrollerBasic extends VerticalLayout {
     ticketTitle.setId(TRIP_INFO_TITLE_ID);
       //Pick date of the trip
     DatePicker destinationDate = new DatePicker("Date");
+    destinationDate.getStyle().set("padding", "var(--lumo-space-m)");
     destinationDate.setRequired(true); 
     destinationDate.setMin(LocalDate.now(ZoneId.systemDefault()));
     destinationDate.setErrorMessage("This field is required");
