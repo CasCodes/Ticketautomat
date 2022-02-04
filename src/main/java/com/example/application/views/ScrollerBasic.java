@@ -22,6 +22,8 @@ import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
+import org.apache.commons.compress.utils.IOUtils;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -60,7 +62,7 @@ public class ScrollerBasic extends VerticalLayout {
     //The Tickets made off destination & price
     final List<Ticket> tickets = new ArrayList<>();
     tickets.add(new Ticket("Select a destination", 0.0));
-    tickets.add(new Ticket("Auenland",9.99));
+    tickets.add(new Ticket("Aeunland",9.99));
     tickets.add(new Ticket("Mordor",19.99));
     tickets.add(new Ticket("Bielefeld",29.99));
 
