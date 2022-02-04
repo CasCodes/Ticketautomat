@@ -10,7 +10,7 @@ Build with the Vaadin Flow framework and served on spring boot 🍀.
 
 Progress:
 - [x] git setup
-- [ ] basic functionality
+- [x] basic functionality
 - [ ] database
 - [ ] additional features
   - admin view
