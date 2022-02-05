@@ -14,18 +14,18 @@ import com.vaadin.flow.router.Route;
 @Route("dialog-basic")
 public class DialogBasic extends Div {
 
-    public DialogBasic(Float cashback, String mail_adr) {
+    public DialogBasic(Float cashback, String mail_adr, String name, String amount, String dest, String time, String date) {
         Dialog dialog = new Dialog();
         dialog.getElement().setAttribute("aria-label", "Create new employee");
 
-        VerticalLayout dialogLayout = createDialogLayout(dialog, cashback, mail_adr);
+        VerticalLayout dialogLayout = createDialogLayout(dialog, cashback, mail_adr, name, amount, dest, time, date);
         dialog.add(dialogLayout);
 
         dialog.open();
         add(dialog);
     }
 
-    private static VerticalLayout createDialogLayout(Dialog dialog, Float returnCash, String adr) {
+    private static VerticalLayout createDialogLayout(Dialog dialog, Float returnCash, String adr, String name, String amount, String dest, String time, String date) {
         H2 headline = new H2("Confirm purchase");
         headline.getStyle().set("margin", "var(--lumo-space-m) 0 0 0")
                 .set("font-size", "1.5em").set("font-weight", "bold");
@@ -45,7 +45,7 @@ public class DialogBasic extends Div {
         Button cancelButton = new Button("Cancel", e -> dialog.close());
         Button saveButton = new Button("Buy", e -> {
                 SendMail yo = new SendMail();
-                yo.send(adr);
+                yo.send(adr, name, amount, dest, time, date);
                 dialog.close();
         });
 

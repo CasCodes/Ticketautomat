@@ -22,8 +22,6 @@ import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
-import org.apache.commons.compress.utils.IOUtils;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -62,7 +60,7 @@ public class ScrollerBasic extends VerticalLayout {
     //The Tickets made off destination & price
     final List<Ticket> tickets = new ArrayList<>();
     tickets.add(new Ticket("Select a destination", 0.0));
-    tickets.add(new Ticket("Aeunland",9.99));
+    tickets.add(new Ticket("Auenland",9.99));
     tickets.add(new Ticket("Mordor",19.99));
     tickets.add(new Ticket("Bielefeld",29.99));
 
@@ -213,19 +211,13 @@ public class ScrollerBasic extends VerticalLayout {
          !timePicker.isEmpty() &&
          !euroField.isEmpty() &&
          !destinationDate.isEmpty()){
-        System.out.println(firstNameVar + " " + lastNameVar);
-        System.out.println("Tickets: " +  ticket_amount.getValue());
-        System.out.println("At: " + timePickerVar);
-        System.out.println("On the: " + destinationDateVar);
-        System.out.println("To: " + destinationVar);
-        System.out.println("Mail: " + emailFieldVar);
         
         // caspars pop up inserted
         if (priceHandler.compare(price.getValue(), euroField.getValue()) == true){
           System.out.println("payed");
 
           // pop up dialog
-          DialogBasic info = new DialogBasic(priceHandler.cashback(price.getValue(), euroField.getValue()),emailFieldVar);
+          DialogBasic info = new DialogBasic(priceHandler.cashback(price.getValue(), euroField.getValue()),emailFieldVar, firstNameVar + " " + lastNameVar, ticket_amountVar.toString(), destinationVar, timePickerVar, destinationDateVar);
           add(info);
         }
         else {
