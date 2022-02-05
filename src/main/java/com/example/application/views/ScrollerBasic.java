@@ -13,6 +13,8 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -56,6 +58,11 @@ public class ScrollerBasic extends VerticalLayout {
     */
     setMaxWidth("100%");
     getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+
+      Tab booking = new Tab("Booking");
+      Tab system = new Tab("System");
+  
+      Tabs tabs = new Tabs(booking, system);
 
     //The Tickets made off destination & price
     final List<Ticket> tickets = new ArrayList<>();
@@ -108,7 +115,7 @@ public class ScrollerBasic extends VerticalLayout {
       emailFieldVar = emailField.getValue().toString();
     });
       //Build the section composing of ^
-    Section personalInformation = new Section(personalTitle, firstName, lastName, emailField);
+    Section personalInformation = new Section(tabs, personalTitle, firstName, lastName, emailField);
     personalInformation.getElement().setAttribute("aria-labelledby", PERSONAL_TITLE_ID);
     // Employment information
     H3 ticketTitle = new H3("Trip information");
@@ -125,8 +132,7 @@ public class ScrollerBasic extends VerticalLayout {
       //Pick time of the trip
     TimePicker timePicker = new TimePicker();
     timePicker.setRequiredIndicatorVisible(true);
-    timePicker.setLabel("Time");
-    timePicker.setValue(LocalTime.of(3, 0));
+    timePicker.setLabel("Time"); 
     timePicker.setRequired(true); 
     timePicker.setErrorMessage("This field is required");
     timePicker.addValueChangeListener(event -> {
@@ -145,9 +151,9 @@ public class ScrollerBasic extends VerticalLayout {
     IntegerField ticket_amount = new IntegerField();
     ticket_amount.setLabel("Ticket Quantity");
     ticket_amount.setHelperText("Max 10 items");
-    ticket_amount.setMin(1);
+    ticket_amount.setMin(0);
     ticket_amount.setMax(10);
-    ticket_amount.setValue(1);
+    ticket_amount.setValue(0);
     ticket_amount.setHasControls(true);
     
     Section employmentInformation = new Section(ticketTitle, timePicker, destinationDate, destination, ticket_amount);
