@@ -211,12 +211,6 @@ public class ScrollerBasic extends VerticalLayout {
          !timePicker.isEmpty() &&
          !euroField.isEmpty() &&
          !destinationDate.isEmpty()){
-        System.out.println(firstNameVar + " " + lastNameVar);
-        System.out.println("Tickets: " +  ticket_amount.getValue());
-        System.out.println("At: " + timePickerVar);
-        System.out.println("On the: " + destinationDateVar);
-        System.out.println("To: " + destinationVar);
-        System.out.println("Mail: " + emailFieldVar);
         
         // caspars pop up inserted
         if (priceHandler.compare(price.getValue(), euroField.getValue()) == true){
