@@ -1,6 +1,7 @@
 package com.example.application.views;
 
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.UUID;
 
 import javax.mail.Message;
@@ -21,6 +22,11 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+
+// Importing input output classes
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 
 public class SendMail {
@@ -48,8 +54,13 @@ public class SendMail {
 
             protected PasswordAuthentication getPasswordAuthentication() {
 
-                return new PasswordAuthentication("vincas.express@gmail.com", "****");
-
+                try {
+                    String passw = read_pass();
+                    return new PasswordAuthentication("vincas.express@gmail.com", passw);
+                } catch (IOException e) {
+                    System.out.println("reading password failed!");
+                }
+                return new PasswordAuthentication("vincas.express@gmail.com", "*****");
             }
 
         });
@@ -108,6 +119,25 @@ public class SendMail {
             mex.printStackTrace();
         }
 
+    }
+    // ignoring my problems with throw
+    public String read_pass() throws IOException {
+        // pass the path to the file as a parameter
+        try {
+            File myObj = new File("src/main/java/com/example/application/views/password.txt");
+            
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+              String data = myReader.nextLine();
+              return data;
+            }
+            myReader.close();
+          } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }
+
+          return "READER FAILED";
     }
 
 }
