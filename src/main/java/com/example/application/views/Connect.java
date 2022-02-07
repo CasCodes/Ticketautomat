@@ -1,5 +1,6 @@
 package com.example.application.views;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,9 +13,9 @@ public class Connect {
         Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:sqlite:src/main/java/com/example/application/views/db/transactions.db";
+            String url = "jdbc:sqlite:db/transactions.db";
             // create a connection to the database
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection("jdbc:sqlite:transactions.db");
             
             System.out.println("Connection to SQLite has been established.");
             
@@ -38,3 +39,4 @@ public class Connect {
     }
 
 }
+
