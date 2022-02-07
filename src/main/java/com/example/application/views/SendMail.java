@@ -122,29 +122,22 @@ public class SendMail {
     }
     // ignoring my problems with throw
     public String read_pass() throws IOException {
-            // pass the path to the file as a parameter
-        File file = new File("password.txt");
-        Scanner sc = new Scanner(file);
-        
-        String psw = "";
-        while (sc.hasNextLine()){
-            psw = (String) sc.nextLine();
-        }
-        sc.close();
+        // pass the path to the file as a parameter
+        try {
+            File myObj = new File("src/main/java/com/example/application/views/password.txt");
+            
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+              String data = myReader.nextLine();
+              return data;
+            }
+            myReader.close();
+          } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }
 
-        System.out.println(psw);
-        return("kermit");
-   
-        
-        // Path fileName = Path.of("password.txt");
- 
-        // // Now calling Files.readString() method to
-        // // read the file
-        // String str = Files.readString(fileName);
- 
-        // // Printing the string
-        // System.out.println(str);
-        // return str;
+          return "READER FAILED";
     }
 
 }
