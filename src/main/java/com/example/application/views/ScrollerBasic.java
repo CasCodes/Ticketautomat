@@ -61,11 +61,6 @@ public class ScrollerBasic extends VerticalLayout {
     */
     setMaxWidth("100%");
     getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
-
-      Tab booking = new Tab("Booking");
-      Tab system = new Tab("System");
-      Tabs tabs = new Tabs(booking, system);
-
     
     //The Tickets made off destination & price
     final List<Ticket> tickets = new ArrayList<>();
@@ -123,7 +118,7 @@ public class ScrollerBasic extends VerticalLayout {
       emailFieldVar = emailField.getValue().toString();
     });
       //Build the section composing of ^
-    Section personalInformation = new Section(tabs, personalTitle, firstName, lastName, emailField);
+    Section personalInformation = new Section(personalTitle, firstName, lastName, emailField);
     personalInformation.getElement().setAttribute("aria-labelledby", PERSONAL_TITLE_ID);
     // Employment information
     H3 ticketTitle = new H3("Trip information");
