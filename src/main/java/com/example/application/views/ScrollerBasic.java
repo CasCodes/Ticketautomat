@@ -8,6 +8,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 @Route(value = "")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 public class ScrollerBasic extends VerticalLayout {
@@ -47,6 +49,7 @@ public class ScrollerBasic extends VerticalLayout {
   public String timePickerVar;
   public String destinationVar;
   public Integer ticket_amountVar;
+  private final Scroller scroller;
 
   public ScrollerBasic() {
     setAlignItems(Alignment.CENTER);
@@ -61,9 +64,9 @@ public class ScrollerBasic extends VerticalLayout {
 
       Tab booking = new Tab("Booking");
       Tab system = new Tab("System");
-  
       Tabs tabs = new Tabs(booking, system);
 
+    
     //The Tickets made off destination & price
     final List<Ticket> tickets = new ArrayList<>();
     tickets.add(new Ticket("Select a destination", 0.0));
@@ -71,6 +74,7 @@ public class ScrollerBasic extends VerticalLayout {
     tickets.add(new Ticket("Mordor",19.99));
     tickets.add(new Ticket("Bielefeld",29.99));
 
+    LoginForm loginForm = new LoginForm();
     // Header
     Header header = new Header();
     header.getStyle()
@@ -103,6 +107,10 @@ public class ScrollerBasic extends VerticalLayout {
     lastName.setErrorMessage("This field is required");
     lastName.addValueChangeListener(event -> {
       lastNameVar = lastName.getValue().toString();
+      System.out.println(lastNameVar);
+      if(lastNameVar.equals("SystemLog")){
+        loginForm.setVisible(true);
+      }
     });
     EmailField emailField = new EmailField();
     emailField.setLabel("Email address");
@@ -179,9 +187,9 @@ public class ScrollerBasic extends VerticalLayout {
       price.setValue(destination.getValue().preis * ticket_amount.getValue());
     });
     
-    //the balance of the buyer
+    //the Cash of the buyer
     NumberField euroField = new NumberField();
-    euroField.setLabel("Balance");
+    euroField.setLabel("Cash");
     euroField.setRequiredIndicatorVisible(true);
     euroField.setValue(null);
     Div euroSuffix = new Div();
@@ -193,12 +201,11 @@ public class ScrollerBasic extends VerticalLayout {
     personalInformation.getElement().setAttribute("aria-labelledby", PAYMENT_TITLE_ID);
 
     //builds the whole component with the sections
-    Scroller scroller = new Scroller(new Div(personalInformation, employmentInformation,payment));
+    scroller = new Scroller(new Div(personalInformation, employmentInformation,payment));
     scroller.setScrollDirection(Scroller.ScrollDirection.VERTICAL);
     scroller.getStyle()
             .set("border-bottom", "1px solid var(--lumo-contrast-20pct)")
             .set("padding", "var(--lumo-space-m)");
-    add(scroller);
     // end::snippet[]
     // Footer
 
@@ -216,7 +223,8 @@ public class ScrollerBasic extends VerticalLayout {
          !emailField.isEmpty() &&
          !timePicker.isEmpty() &&
          !euroField.isEmpty() &&
-         !destinationDate.isEmpty()){
+         !destinationDate.isEmpty() &&
+         ticket_amount.getValue() != 0){
         
         // caspars pop up inserted
         if (priceHandler.compare(price.getValue(), euroField.getValue()) == true){
@@ -227,12 +235,12 @@ public class ScrollerBasic extends VerticalLayout {
           add(info);
         }
         else {
-          System.out.println("not enough balance");
+          System.out.println("not enough Cash");
           // warn notification
           Notification notification = new Notification();
           notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
 
-          Div text = new Div(new Text("Not enough balance!"));
+          Div text = new Div(new Text("Not enough Cash!"));
 
           Button closeButton = new Button(new Icon(VaadinIcon.CLOSE));
           closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
@@ -285,7 +293,42 @@ public class ScrollerBasic extends VerticalLayout {
 
     Footer footer = new Footer(buy, reset);
     footer.getStyle().set("padding", "var(--lumo-space-wide-m)");
-    add(footer);
-  }
+    add(scroller,footer);
 
+    VerticalLayout vLayout = new VerticalLayout();
+
+    ComboBox<Ticket> destinationSystem = new ComboBox<>("Destination");
+    final List<Ticket> ticketsSystem = new ArrayList<>(tickets);
+    ticketsSystem.add(new Ticket("e",100.0));
+    destinationSystem.setWidthFull();
+    destinationSystem.setAllowCustomValue(false);
+    destinationSystem.setItemLabelGenerator(Ticket::getFullName);
+    destinationSystem.setItems(ticketsSystem);
+    destinationSystem.setValue(ticketsSystem.get(0));
+
+    NumberField priceSystem = new NumberField("Price");
+    priceSystem.setLabel("Price");
+    Div priceSuffixSystem = new Div();
+    priceSuffixSystem.setText("€");
+    priceSystem.setSuffixComponent(priceSuffixSystem);
+    priceSystem.addValueChangeListener(e -> {
+      System.out.println(priceSystem.getValue());
+      destinationSystem.getValue().preis = priceSystem.getValue();
+      tickets.get(ticketsSystem.indexOf(destinationSystem.getValue())).preis = priceSystem.getValue();
+      ticket_amount.setValue(0);
+    });
+    vLayout.add(destinationSystem,priceSystem);
+
+    add(loginForm);
+    loginForm.setVisible(false);
+    loginForm.setForgotPasswordButtonVisible(false);
+    loginForm.addLoginListener(e -> {
+      if(e.getUsername().equals("yo") && e.getPassword().equals("penis")){
+        add(vLayout);
+        loginForm.setVisible(false);
+      }else{
+        // "failed" pop up
+      }
+    });
+  }
 }
