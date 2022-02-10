@@ -114,10 +114,13 @@ public class SendMail {
             success.add(layout);
             success.open();
 
+            // clear all fields
+            // maybe use a function that stores all variables and clears them afterwards
 
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
+
 
     }
     // ignoring my problems with throw
@@ -136,7 +139,6 @@ public class SendMail {
             System.out.println("An error occurred.");
             e.printStackTrace();
           }
-
           return "READER FAILED";
     }
 
