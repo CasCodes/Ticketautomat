@@ -25,8 +25,8 @@ public class Connect {
             );**/
             Statement statement = conn.createStatement();
             statement.executeUpdate("drop table if exists cashflow");
-            statement.executeUpdate("create table cashflow (id integer, cash_in real, cash_back real)");
-            
+            statement.executeUpdate("create table cashflow (cash_in real, cash_back real)");
+            writeData(statement, cash_in, cash_back);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -41,14 +41,20 @@ public class Connect {
         }
     }
     
-    public boolean writeData(Statement statement, float cash_in, float cash_back) {
+    public static boolean writeData(Statement statement, float cash_in, float cash_back) {
         int id = 1;
         try {
-            String update = String.format("insert into cashflow values(%i, %i, $i)", id, cash_in, cash_back);
+            // write cashflow into db after buy button was pressed
+
+            System.out.println("id: " + id +" in: "+cash_in+" back: " + cash_back);
+            String update = String.format("insert into cashflow values(%f, %f)", cash_in, cash_back);
+            //String update = String.format("insert into cashflow values(1, 2.01, 3)");
             statement.executeUpdate(update);
             id++;
         } catch (SQLException e) {
+            e.printStackTrace(System.out);
             System.out.println("write data failed!");
+            return false;
         }
         return true;
     }
