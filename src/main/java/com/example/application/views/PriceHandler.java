@@ -12,7 +12,8 @@ public class PriceHandler {
 
         if(balance >= price) {
             System.out.println("price: " + price + "\nbalance: " + balance);
-            Connect.connect();
+            // establice connection to database
+            Connect.connect( balance.floatValue(), cashback(price, balance));
             return true;
         }
         else{
