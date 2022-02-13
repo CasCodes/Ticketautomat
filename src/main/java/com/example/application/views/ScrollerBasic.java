@@ -1,5 +1,7 @@
 package com.example.application.views;
 
+import com.flowingcode.vaadin.addons.xterm.XTerm;
+import com.flowingcode.vaadin.addons.xterm.ITerminalOptions.CursorStyle;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -313,7 +315,17 @@ public class ScrollerBasic extends VerticalLayout {
       tickets.get(ticketsSystem.indexOf(destinationSystem.getValue())).preis = priceSystem.getValue();
       ticket_amount.setValue(0);
     });
-    vLayout.add(destinationSystem,priceSystem);
+
+    XTerm xterm = new XTerm();
+    xterm.writeln("Hello world.\n\n");
+    xterm.setCursorBlink(true);
+    xterm.setCursorStyle(CursorStyle.UNDERLINE);
+          
+    xterm.setSizeFull();
+        
+    xterm.focus();
+
+    vLayout.add(destinationSystem,priceSystem, xterm);
 
     add(loginForm);
     loginForm.setVisible(false);
