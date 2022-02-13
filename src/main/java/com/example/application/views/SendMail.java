@@ -82,7 +82,7 @@ public class SendMail {
 
             String uniqueID = UUID.randomUUID().toString().substring(0,8);
 
-            String content = String.format("<h1>Hello %s!<h1><h3>These are your %s tickets for %s<h3><h3>Your train is leaving on the %s at %s.<h3><h3>This is your Ticket-ID: %s<h3><h2>Enjoy your Trip!<h2><h3>Thank you for choosing VinCasExpress :)", name,amount,dest,date,time,uniqueID);
+            String content = String.format("<h1>Hello %s!<h1><h3><ul><li>Ticket Amount: %s</li><li>Destination: %s</li><li>Date: %s</li><li>Time: %s</li></ul><h3>This is your Ticket-ID: %s<h3><h2>Enjoy your Trip!<h2><h3>Thank you for choosing VinCasExpress :)", name,amount,dest,date,time,uniqueID);
             // Send the actual HTML message.
             message.setContent(
                 content,
