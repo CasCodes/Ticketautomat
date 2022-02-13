@@ -3,6 +3,7 @@ package com.example.application.views;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -56,6 +57,36 @@ public class Connect {
             return false;
         }
         return true;
+    }
+
+    // returns the total value in and the total value out
+    // array [0] is in, array [1] is out
+    public static float[] totalBackIn() {
+        float inOut[] = new float[2];
+
+        try {
+            // connection to the database
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:transactions.db");
+            Statement statement = conn.createStatement();
+
+            // fetch data
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM cashflow");
+            
+            // loop through the result set
+            float sumIn = 0, sumOut = 0;
+            while (resultSet.next()) {
+                sumIn += resultSet.getFloat("cash_in");
+                sumOut += resultSet.getFloat("cash_back");
+            }
+            inOut[0] = sumIn;
+            inOut[1] = sumOut;
+
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return inOut;
     }
 
 }

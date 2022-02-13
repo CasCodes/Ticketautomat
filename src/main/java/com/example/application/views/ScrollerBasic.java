@@ -345,6 +345,8 @@ public class ScrollerBasic extends VerticalLayout {
       if(e.getUsername().equals("Kermit") && e.getPassword().equals("SecureKermitPassword42069")){
         add(vLayout);
         loginForm.setVisible(false);
+        // accessing the cash in/out values
+        System.out.println(Connect.totalBackIn()[0]);
       }
       else{
       System.out.println("You are not the admin!");
