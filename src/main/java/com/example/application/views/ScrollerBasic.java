@@ -1,7 +1,5 @@
 package com.example.application.views;
 
-import com.flowingcode.vaadin.addons.xterm.XTerm;
-import com.flowingcode.vaadin.addons.xterm.ITerminalOptions.CursorStyle;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -16,8 +14,6 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -315,17 +311,7 @@ public class ScrollerBasic extends VerticalLayout {
       tickets.get(ticketsSystem.indexOf(destinationSystem.getValue())).preis = priceSystem.getValue();
       ticket_amount.setValue(0);
     });
-
-    XTerm xterm = new XTerm();
-    xterm.writeln("Hello world.\n\n");
-    xterm.setCursorBlink(true);
-    xterm.setCursorStyle(CursorStyle.UNDERLINE);
-          
-    xterm.setSizeFull();
-        
-    xterm.focus();
-
-    vLayout.add(destinationSystem,priceSystem, xterm);
+    vLayout.add(destinationSystem,priceSystem);
 
     add(loginForm);
     loginForm.setVisible(false);
@@ -355,6 +341,7 @@ public class ScrollerBasic extends VerticalLayout {
 
         notification.add(layout);
         notification.open();
+        loginForm.setEnabled(true);
       }
     });
   }
