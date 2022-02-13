@@ -14,6 +14,8 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.progressbar.ProgressBar;
+import com.vaadin.flow.component.progressbar.ProgressBarVariant;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.EmailField;
@@ -313,7 +315,29 @@ public class ScrollerBasic extends VerticalLayout {
       tickets.get(ticketsSystem.indexOf(destinationSystem.getValue())).preis = priceSystem.getValue();
       ticket_amount.setValue(0);
     });
-    vLayout.add(destinationSystem,priceSystem);
+
+    // admin view progress bar
+    // cash in
+    ProgressBar progressBarIn = new ProgressBar();
+    progressBarIn.setMin(0);
+    progressBarIn.setMax(100);
+    progressBarIn.setValue(50);
+    //label
+    Div progressBarLabel = new Div();
+    progressBarLabel.setText("Cash in: 42069 $");
+    progressBarIn.addThemeVariants(ProgressBarVariant.LUMO_SUCCESS);
+
+    // cash back
+    ProgressBar progressBarBack = new ProgressBar();
+    progressBarBack.setMin(0);
+    progressBarBack.setMax(100);
+    progressBarBack.setValue(30);
+    //label
+    Div progressBarLabel2 = new Div();
+    progressBarLabel2.setText("Cash back: 6900 $");
+    progressBarBack.addThemeVariants(ProgressBarVariant.LUMO_ERROR);
+
+    vLayout.add(destinationSystem,priceSystem, progressBarIn, progressBarLabel, progressBarBack, progressBarLabel2);
 
     add(loginForm);
     loginForm.setVisible(false);
