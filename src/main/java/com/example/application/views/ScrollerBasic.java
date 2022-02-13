@@ -297,7 +297,6 @@ public class ScrollerBasic extends VerticalLayout {
 
     ComboBox<Ticket> destinationSystem = new ComboBox<>("Destination");
     final List<Ticket> ticketsSystem = new ArrayList<>(tickets);
-    ticketsSystem.add(new Ticket("e",100.0));
     destinationSystem.setWidthFull();
     destinationSystem.setAllowCustomValue(false);
     destinationSystem.setItemLabelGenerator(Ticket::getFullName);
