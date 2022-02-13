@@ -24,8 +24,8 @@ public class Connect {
                 cash_out REAL
             );**/
             Statement statement = conn.createStatement();
-            statement.executeUpdate("drop table if exists cashflow");
-            statement.executeUpdate("create table cashflow (cash_in real, cash_back real)");
+            // statement.executeUpdate("drop table if exists cashflow");
+            // statement.executeUpdate("create table cashflow (cash_in real, cash_back real)");
             writeData(statement, cash_in, cash_back);
 
         } catch (SQLException e) {
