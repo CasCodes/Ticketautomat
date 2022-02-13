@@ -322,8 +322,27 @@ public class ScrollerBasic extends VerticalLayout {
       if(e.getUsername().equals("yo") && e.getPassword().equals("penis")){
         add(vLayout);
         loginForm.setVisible(false);
-      }else{
-        // "failed" pop up
+      }
+      else{
+      System.out.println("You are not the admin!");
+          // warn notification
+        Notification notification = new Notification();
+        notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+
+        Div text = new Div(new Text("Are you really the admin?"));
+
+        Button closeButton = new Button(new Icon(VaadinIcon.CLOSE));
+        closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        closeButton.getElement().setAttribute("aria-label", "Close");
+        closeButton.addClickListener(event -> {
+          notification.close();
+        });
+
+        HorizontalLayout layout = new HorizontalLayout(text, closeButton);
+        layout.setAlignItems(Alignment.CENTER);
+
+        notification.add(layout);
+        notification.open();
       }
     });
   }
