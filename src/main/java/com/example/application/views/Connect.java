@@ -48,7 +48,6 @@ public class Connect {
 
             System.out.println("id: " + id +" in: "+cash_in+" back: " + cash_back);
             String update = String.format("insert into cashflow values(%f, %f)", cash_in, cash_back);
-            //String update = String.format("insert into cashflow values(1, 2.01, 3)");
             statement.executeUpdate(update);
             id++;
         } catch (SQLException e) {
