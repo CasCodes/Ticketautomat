@@ -25,8 +25,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 
 // Importing input output classes
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+
 
 
 public class SendMail {

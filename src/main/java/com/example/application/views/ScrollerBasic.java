@@ -319,7 +319,7 @@ public class ScrollerBasic extends VerticalLayout {
     loginForm.setVisible(false);
     loginForm.setForgotPasswordButtonVisible(false);
     loginForm.addLoginListener(e -> {
-      if(e.getUsername().equals("yo") && e.getPassword().equals("penis")){
+      if(e.getUsername().equals("Kermit") && e.getPassword().equals("SecureKermitPassword42069")){
         add(vLayout);
         loginForm.setVisible(false);
       }
