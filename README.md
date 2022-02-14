@@ -7,14 +7,6 @@ A ticket vending machine written in Java ☕ by [Vincent](https://github.com/Vin
 Build with the Vaadin Flow framework and served on spring boot 🍀.
 
 
-Progress:
-- [x] git setup
-- [x] basic functionality
-- [x] database
-- [ ] additional features
-  - admin view
-  - fancy ticket printing
-
 ## Features 🐛
 - Java front- & backend thanks to Vaadin
 - Ticket gets sent via email
@@ -28,16 +20,27 @@ Progress:
 
 ## Installation 💾
 
-Option 1: Using jar (recommended)
+Option 1: Using jar
 - Download the .jar file from packages
 - Navigate into the directory where it is stored
 - run `java -jar <filename>.jar` (This should boot up a local server on port:8080) 
 
-Option 2: Running from source (for development)
+IMPORTANT! The email sending doesn't work with the .jar!
+
+Option 2: Running from source
   1. git clone this repo
   2. open /Ticketautomat in an IDE (vscode recommended)
   3. navigate to `Ticketautomat/src/main/java/com/example/application`
-  4. right-click on Application.java and select "run java"
+  4. create a new file called password.txt in the `/views` directory and add the password
+  5. right-click on Application.java and select "run java" and go to localhost:8080 in your browser
+
+## Quickstart :zap:
+
+Normal Usage:
+
+Admin Usage:
+- User: Kermit
+- Password: SecureKermitPassword42069
 
 ## What we've learned 🎓
 - OOP with Java
