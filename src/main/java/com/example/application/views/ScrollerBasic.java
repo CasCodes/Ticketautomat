@@ -315,28 +315,41 @@ public class ScrollerBasic extends VerticalLayout {
       ticket_amount.setValue(0);
     });
 
+    // accessing the cash in/out values
+    float cashIn = Connect.totalBackIn()[0];
+    float cashOut = Connect.totalBackIn()[1];
+    float stonks = cashIn - cashOut;
     // admin view progress bar
     // cash in
     ProgressBar progressBarIn = new ProgressBar();
     progressBarIn.setMin(0);
-    progressBarIn.setMax(100);
-    progressBarIn.setValue(50);
+    progressBarIn.setMax(cashIn);
+    progressBarIn.setValue(cashIn);
     //label
     Div progressBarLabel = new Div();
-    progressBarLabel.setText("Cash in: 42069 $");
+    progressBarLabel.setText("Cash in: " + cashIn + "€");
     progressBarIn.addThemeVariants(ProgressBarVariant.LUMO_SUCCESS);
 
     // cash back
     ProgressBar progressBarBack = new ProgressBar();
     progressBarBack.setMin(0);
-    progressBarBack.setMax(100);
-    progressBarBack.setValue(30);
+    progressBarBack.setMax(cashIn);
+    progressBarBack.setValue(cashOut);
     //label
     Div progressBarLabel2 = new Div();
-    progressBarLabel2.setText("Cash back: 6900 $");
+    progressBarLabel2.setText("Cash back: " + cashOut + "€");
     progressBarBack.addThemeVariants(ProgressBarVariant.LUMO_ERROR);
 
-    vLayout.add(destinationSystem,priceSystem, progressBarIn, progressBarLabel, progressBarBack, progressBarLabel2);
+    // total stonks button
+    NumberField totalStonks = new NumberField("Price");
+    totalStonks.setLabel("Total Stonks");
+    Div totalStonksSuffix = new Div();
+    totalStonks.setSuffixComponent(priceSuffixSystem);
+    
+    totalStonks.setValue((double) Math.round(stonks * 100.0) / 100.0);
+    totalStonks.setReadOnly(true);
+
+    vLayout.add(destinationSystem,priceSystem, progressBarLabel, progressBarIn, progressBarLabel2, progressBarBack, totalStonks, totalStonksSuffix);
 
     add(loginForm);
     loginForm.setVisible(false);
@@ -345,8 +358,7 @@ public class ScrollerBasic extends VerticalLayout {
       if(e.getUsername().equals("Kermit") && e.getPassword().equals("SecureKermitPassword42069")){
         add(vLayout);
         loginForm.setVisible(false);
-        // accessing the cash in/out values
-        System.out.println(Connect.totalBackIn()[0]);
+        
       }
       else{
       System.out.println("You are not the admin!");
@@ -354,7 +366,7 @@ public class ScrollerBasic extends VerticalLayout {
         Notification notification = new Notification();
         notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
 
-        Div text = new Div(new Text("Are you really the admin?"));
+        Div text = new Div(new Text("Are you really the admin? >:0"));
 
         Button closeButton = new Button(new Icon(VaadinIcon.CLOSE));
         closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
