@@ -38,9 +38,18 @@ Option 2: Running from source
 
 Normal Usage:
 
+https://user-images.githubusercontent.com/90899655/153849027-2bc11d81-db8f-4715-8503-f4bb9091a990.mov
+
+
+
 Admin Usage:
 - User: Kermit
 - Password: SecureKermitPassword42069
+
+
+https://user-images.githubusercontent.com/90899655/153849192-6ed714f8-7306-4994-aa0a-972989fe9304.mov
+
+
 
 ## What we've learned 🎓
 - OOP with Java
