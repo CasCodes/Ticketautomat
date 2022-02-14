@@ -55,4 +55,4 @@ https://user-images.githubusercontent.com/90899655/153849192-6ed714f8-7306-4994-
 - OOP with Java
 - Working with the Vaadin Flow framework
 - Using multiple Git branches
-- Packagin Spring Boot apps as .jar
+- Pair programming
