@@ -21,7 +21,7 @@ Build with the Vaadin Flow framework and served on spring boot 🍀.
 ## Installation 💾
 
 Option 1: Using jar
-- Download the .jar file from packages
+- Download the .jar file from releases
 - Navigate into the directory where it is stored
 - run `java -jar <filename>.jar` (This should boot up a local server on port:8080) 
 
